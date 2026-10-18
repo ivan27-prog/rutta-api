@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -32,10 +34,13 @@ public class Product {
     @Column(name = "level")
     private String level;
 
-    //@ManyToOne
-    //@JoinColumn(name = "category_id", nullable = false)
-    //@JsonIgnore
-    //private Category category;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "product_category",                                    // tabla intermedia
+            joinColumns = @JoinColumn(name = "product_id"),               // FK hacia product
+            inverseJoinColumns = @JoinColumn(name = "category_id")        // FK hacia category
+    )
+    private Set<Category> categories = new HashSet<>();
 
 
 

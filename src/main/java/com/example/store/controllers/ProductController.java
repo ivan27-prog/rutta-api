@@ -1,7 +1,7 @@
 package com.example.store.controllers;
 
 
-import com.example.store.datos.ProductRequest;
+import com.example.store.dtos.ProductRequest;
 import com.example.store.models.Product;
 import com.example.store.services.ProductService;
 import jakarta.validation.Valid;

@@ -1,10 +1,9 @@
 package com.example.store.services;
 
-import com.example.store.datos.ProductRequest;
+import com.example.store.dtos.ProductRequest;
 import com.example.store.exceptions.ResourceNotFoundException;
 import com.example.store.models.Product;
 import com.example.store.repository.ProductRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

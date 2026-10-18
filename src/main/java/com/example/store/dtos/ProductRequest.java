@@ -1,4 +1,4 @@
-package com.example.store.datos;
+package com.example.store.dtos;
 
 import java.math.BigDecimal;
 
