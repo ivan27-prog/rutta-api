@@ -42,6 +42,9 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Description description;
+
 
 
 }
