@@ -34,13 +34,16 @@ public class Product {
     @Column(name = "level")
     private String level;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn (name = "category_id")
+    private Category category;
+    /*@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "product_category",                                    // tabla intermedia
             joinColumns = @JoinColumn(name = "product_id"),               // FK hacia product
             inverseJoinColumns = @JoinColumn(name = "category_id")        // FK hacia category
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();*/
 
 
 
