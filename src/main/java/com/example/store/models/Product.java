@@ -34,14 +34,35 @@ public class Product {
     @Column(name = "level")
     private String level;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn (name = "category_id")
+    private Category category;
+    /*@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "product_category",                                    // tabla intermedia
             joinColumns = @JoinColumn(name = "product_id"),               // FK hacia product
             inverseJoinColumns = @JoinColumn(name = "category_id")        // FK hacia category
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();*/
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Description description;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "product_has_color",                                    // tabla intermedia
+            joinColumns = @JoinColumn(name = "product_id"),               // FK hacia product
+            inverseJoinColumns = @JoinColumn(name = "color_id")        // FK hacia category
+    )
+    private Set<Color> color = new HashSet<>();
 
+    public void addColor(Color color) {
+        this.color.add(color);
+        color.getProducts().add(this);
+    }
+
+    public void removeColor(Color color) {
+        this.color.remove(color);
+        color.getProducts().remove(this);
+    }
 }
