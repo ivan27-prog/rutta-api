@@ -1,54 +1,51 @@
 package com.example.store.services;
 
+
 import com.example.store.dtos.SizeRequest;
 import com.example.store.exceptions.ResourceNotFoundException;
 import com.example.store.models.Size;
 import com.example.store.repository.SizeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SizeService {
+@AllArgsConstructor
 
+public class SizeService {
+    //Permite acceder a las tallas guardadas en la base de datos.
     private final SizeRepository sizeRepository;
 
-    @Autowired
-    public SizeService(SizeRepository sizeRepository) {
-        this.sizeRepository = sizeRepository;
-    }
-
+    //Metodo para obtener todas las tallas
     public List<Size> getAllSizes() {
         return sizeRepository.findAll();
     }
 
-    public Size getSizeById(Long id) {
-        return sizeRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Talla con el id " + id + " no encontrada")
-        );
+    //Metodo para buscar una talla por su id
+    public Size getSizeById(long sizeId) {
+        return sizeRepository.findById(sizeId).orElseThrow(() -> new ResourceNotFoundException("Talla con id " + sizeId + " no encontrada"));
     }
 
-    public Size createSize(SizeRequest newSize) {
+    //Metodo para crear una talla
+    public Size createSize(SizeRequest sizeRequest) {
         Size size = new Size();
-        size.setSizeValue(newSize.sizeValue());
+        size.setSizeValue(sizeRequest.sizeValue());
         return sizeRepository.save(size);
     }
 
-    public Size updateSize(Long id, SizeRequest updateSize) {
-        Size oldSize = sizeRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Talla con el id " + id + " no encontrada")
-        );
-        if (updateSize.sizeValue() != null) {
-            oldSize.setSizeValue(updateSize.sizeValue());
+    //Metodo para actualizar una talla
+    public Size updateSize(long sizeId, SizeRequest sizeRequest) {
+        Size size = getSizeById(sizeId);
+        if (sizeRequest.sizeValue() != null) {
+            size.setSizeValue(sizeRequest.sizeValue());
         }
-        return sizeRepository.save(oldSize);
+        return sizeRepository.save(size);
     }
 
-    public Size deleteSizeById(Long id) {
-        Size size = sizeRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Talla con el id " + id + " no encontrada")
-        );
+    //Metodo para eliminar una talla
+    public Size deleteSize(long sizeId) {
+        Size size = getSizeById(sizeId);
         sizeRepository.delete(size);
         return size;
     }

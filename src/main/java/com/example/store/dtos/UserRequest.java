@@ -18,4 +18,4 @@ public record UserRequest(
         @NotBlank(message = "El teléfono es obligatorio")
         @Size(max = 10, message = "El teléfono no puede exceder 10 caracteres")
         String phoneNumber) {}
-}
+
