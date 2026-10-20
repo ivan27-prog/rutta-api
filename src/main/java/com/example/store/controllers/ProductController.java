@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/product") //url: http:localhost:8080/api/product
+@RequestMapping(path = "/api/product") //url: http://localhost:8080/api/product
 public class ProductController {
 
     private final ProductService productService;

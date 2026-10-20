@@ -1,3 +1,4 @@
+/*
 package com.example.store.dtos;
 
 import jakarta.validation.constraints.Email;
@@ -19,3 +20,4 @@ public record UserRequest(
         @Size(max = 10, message = "El teléfono no puede exceder 10 caracteres")
         String phoneNumber) {}
 
+*/
