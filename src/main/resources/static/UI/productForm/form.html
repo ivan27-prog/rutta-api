@@ -94,6 +94,26 @@
                 <div class="invalid-feedback">Selecciona una actividad.</div>
               </div>
 
+              <!--todo ============ CATEGORÍA ============ -->
+              <div class="col-md-6">
+                <label for="categoryId" class="form-label">
+                  Categoría
+                </label>
+
+                <select
+                        class="form-select"
+                        id="categoryId"
+                        name="categoryId"
+                        required
+                >
+                  <option value="">Selecciona una categoría...</option>
+                </select>
+
+                <div class="invalid-feedback">
+                  Selecciona una categoría.
+                </div>
+              </div>
+
               <!--todo ======== DESCRIPCION (descriptionText) ========= -->
               <!-- Se guarda con POST /api/description después de crear el producto -->
               <div class="col-12">

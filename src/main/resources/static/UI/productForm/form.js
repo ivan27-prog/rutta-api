@@ -8,10 +8,51 @@ const lista = document.querySelector("#listaProductos");
 const alerta = document.querySelector("#alertaProducto");
 const btnSubmit = document.querySelector("#btnSubmit");
 
+//todo Seleccionamos el campo de categorías del formulario
+const selectCategory = document.querySelector("#categoryId");
+
 //todo Muestra una alerta de Bootstrap (tipo: "success", "danger", "warning")
 const mostrarAlerta = (mensaje, tipo) => {
   alerta.className = `alert alert-${tipo}`;
   alerta.textContent = mensaje;
+};
+
+//todo Consultamos las categorías registradas en la API REST
+const cargarCategorias = async () => {
+  try {
+    // Realizamos una petición GET al backend
+    const response = await fetch("/api/categories");
+
+    // Verificamos si la petición fue exitosa
+    if (!response.ok) {
+      throw new Error("No se pudieron obtener las categorías");
+    }
+
+    // Convertimos la respuesta JSON en un arreglo
+    const categorias = await response.json();
+
+    // Limpiamos las opciones anteriores
+    selectCategory.innerHTML =
+        '<option value="">Selecciona una categoría...</option>';
+
+    // Recorremos las categorías recibidas desde MySQL
+    categorias.forEach((categoria) => {
+      const option = document.createElement("option");
+
+      // Guardamos el ID de la categoría
+      option.value = categoria.id;
+
+      // Mostramos el nombre de la categoría
+      option.textContent = categoria.categoryName;
+
+      // Agregamos la opción al select
+      selectCategory.appendChild(option);
+    });
+
+  } catch (error) {
+    console.error("Error al cargar categorías:", error);
+    mostrarAlerta("No se pudieron cargar las categorías.", "danger");
+  }
 };
 
 //todo Pinta en la tabla los productos que llegan de la API
