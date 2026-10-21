@@ -9,6 +9,12 @@ import {
   createDescription,
   updateDescriptionById,
 } from "../../services/description.service.js";
+import {
+  getAllCategories,
+  createCategory,
+} from "../../services/category.service.js";
+import { createColor } from "../../services/color.service.js";
+import { createSize } from "../../services/size.service.js";
 
 // Elementos del DOM
 const formProduct = document.querySelector("#formProducto");
@@ -17,14 +23,27 @@ const alerta = document.querySelector("#alertaProducto");
 const btnSubmit = document.querySelector("#btnSubmit");
 const btnCancelarEdicion = document.querySelector("#btnCancelarEdicion");
 const tituloFormulario = document.querySelector("#tituloFormulario");
-
-//todo Seleccionamos el campo de categorías del formulario
 const selectCategory = document.querySelector("#categoryId");
 
-//todo Muestra una alerta de Bootstrap (tipo: "success", "danger", "warning")
-// Guardamos en memoria la lista actual y el producto que se está editando (null si es nuevo)
+// Categorías base predefinidas en el frontend (se aseguran en la BDD al iniciar)
+const CATEGORIAS_BASE = ["Mochilas", "Equipo", "Ropa", "Calzado"];
+
+// Guardamos en memoria la lista actual y el producto que se está editando
 let productosCache = [];
+let categoriasCache = [];
 let productoEnEdicion = null;
+
+// Guarda en localStorage qué colores y tallas se eligieron por cada producto para mostrarlos en la tabla
+const obtenerExtrasProducto = (productId) => {
+  const mapa = JSON.parse(localStorage.getItem("rutta-producto-extras") || "{}");
+  return mapa[productId] || { colors: [], sizes: [] };
+};
+
+const guardarExtrasProducto = (productId, colors, sizes) => {
+  const mapa = JSON.parse(localStorage.getItem("rutta-producto-extras") || "{}");
+  mapa[productId] = { colors, sizes };
+  localStorage.setItem("rutta-producto-extras", JSON.stringify(mapa));
+};
 
 // Muestra una alerta de Bootstrap (tipo: "success", "danger", "warning")
 const mostrarAlerta = (mensaje, tipo) => {
@@ -32,55 +51,67 @@ const mostrarAlerta = (mensaje, tipo) => {
   alerta.textContent = mensaje;
 };
 
-//todo Consultamos las categorías registradas en la API REST
-const cargarCategorias = async () => {
-  try {
-    // Realizamos una petición GET al backend
-    const response = await fetch("/api/categories");
-
-    // Verificamos si la petición fue exitosa
-    if (!response.ok) {
-      throw new Error("No se pudieron obtener las categorías");
-    }
-
-    // Convertimos la respuesta JSON en un arreglo
-    const categorias = await response.json();
-
-    // Limpiamos las opciones anteriores
-    selectCategory.innerHTML =
-        '<option value="">Selecciona una categoría...</option>';
-
-    // Recorremos las categorías recibidas desde MySQL
-    categorias.forEach((categoria) => {
-      const option = document.createElement("option");
-
-      // Guardamos el ID de la categoría
-      option.value = categoria.id;
-
-      // Mostramos el nombre de la categoría
-      option.textContent = categoria.categoryName;
-
-      // Agregamos la opción al select
-      selectCategory.appendChild(option);
-    });
-
-  } catch (error) {
-    console.error("Error al cargar categorías:", error);
-    mostrarAlerta("No se pudieron cargar las categorías.", "danger");
-  }
+// Lee todos los checkboxes marcados de un grupo (colors o sizes) como arreglo de strings
+const obtenerSeleccionMultiple = (nombreCampo) => {
+  return [
+    ...formProduct.querySelectorAll(`input[name="${nombreCampo}"]:checked`),
+  ].map((checkbox) => checkbox.value);
 };
 
-//todo Pinta en la tabla los productos que llegan de la API
+// Marca los checkboxes según un arreglo de valores
+const marcarSeleccionMultiple = (nombreCampo, valores = []) => {
+  formProduct
+    .querySelectorAll(`input[name="${nombreCampo}"]`)
+    .forEach((checkbox) => {
+      checkbox.checked = valores.includes(checkbox.value);
+    });
+};
+
+// Carga las categorías desde /api/categories; si la BDD está vacía (por create-drop), crea las 4 base automáticamente
+const cargarCategorias = async () => {
+  let categorias = (await getAllCategories()) || [];
+
+  // Aseguramos que las 4 categorías predefinidas existan en la base de datos
+  for (const nombreBase of CATEGORIAS_BASE) {
+    const existe = categorias.some(
+      (c) => c.categoryName?.toLowerCase() === nombreBase.toLowerCase(),
+    );
+    if (!existe) {
+      const creada = await createCategory({ categoryName: nombreBase });
+      if (creada) categorias.push(creada);
+    }
+  }
+
+  categoriasCache = categorias;
+  selectCategory.innerHTML =
+    '<option value="">Selecciona una categoría (opcional)...</option>';
+
+  categorias.forEach((categoria) => {
+    const option = document.createElement("option");
+    option.value = categoria.id;
+    option.textContent = categoria.categoryName;
+    selectCategory.appendChild(option);
+  });
+};
+
 // Sale del modo edición y limpia el formulario
 const salirModoEdicion = () => {
   productoEnEdicion = null;
   formProduct.reset();
+  marcarSeleccionMultiple("colors", []);
+  marcarSeleccionMultiple("sizes", []);
   tituloFormulario.textContent = "Añadir Nuevo Producto";
   btnSubmit.innerHTML = `<i class="bi bi-check2-circle me-1"></i> Guardar producto`;
   btnCancelarEdicion.classList.add("d-none");
 };
 
 btnCancelarEdicion.addEventListener("click", salirModoEdicion);
+
+// Pinta los badges de un arreglo de colores o tallas
+const renderizarChips = (items = []) => {
+  if (!items || items.length === 0) return "—";
+  return items.map((item) => `<span class="badge-chip">${item}</span>`).join("");
+};
 
 // Pinta en la tabla los productos que llegan de la API
 const pintarProductos = async () => {
@@ -97,7 +128,7 @@ const pintarProductos = async () => {
   if (productos.length === 0) {
     lista.innerHTML = `
       <tr>
-        <td colspan="7" class="text-center text-muted py-4">
+        <td colspan="10" class="text-center text-muted py-4">
           No hay productos registrados todavía.
         </td>
       </tr>
@@ -106,6 +137,13 @@ const pintarProductos = async () => {
   }
 
   productos.forEach((product) => {
+    const extras = obtenerExtrasProducto(product.id);
+    const coloresBackend =
+      product.colors?.length > 0
+        ? product.colors.map((c) => c.colorName)
+        : extras.colors;
+    const tallasMostrar = extras.sizes;
+
     lista.insertAdjacentHTML(
       "beforeend",
       `
@@ -113,8 +151,11 @@ const pintarProductos = async () => {
           <td class="fw-bold">#${product.id}</td>
           <td class="fw-semibold">${product.productName}</td>
           <td>$${Number(product.price).toFixed(2)}</td>
+          <td>${product.category?.categoryName ?? "—"}</td>
           <td><span class="badge-nivel">${product.level ?? "—"}</span></td>
           <td>${product.activity ?? "—"}</td>
+          <td>${renderizarChips(coloresMostrar(coloresBackend))}</td>
+          <td>${renderizarChips(tallasMostrar)}</td>
           <td>${product.description?.descriptionText ?? "—"}</td>
           <td class="text-center text-nowrap">
             <button
@@ -142,6 +183,10 @@ const pintarProductos = async () => {
   });
 };
 
+function coloresMostrar(listaColores) {
+  return Array.isArray(listaColores) ? listaColores : [];
+}
+
 // Eventos de los botones Editar (lapicito) y Eliminar (bote de basura) en la tabla
 lista.addEventListener("click", async (e) => {
   const boton = e.target.closest("button[data-accion]");
@@ -155,13 +200,18 @@ lista.addEventListener("click", async (e) => {
   // --- ACCIÓN: EDITAR (carga los datos en el formulario para hacer PUT) ---
   if (accion === "editar") {
     productoEnEdicion = producto;
+    const extras = obtenerExtrasProducto(producto.id);
 
     formProduct.elements.productName.value = producto.productName ?? "";
     formProduct.elements.price.value = producto.price ?? "";
     formProduct.elements.level.value = producto.level ?? "";
     formProduct.elements.activity.value = producto.activity ?? "";
+    formProduct.elements.categoryId.value = producto.category?.id ?? "";
     formProduct.elements.descriptionText.value =
       producto.description?.descriptionText ?? "";
+
+    marcarSeleccionMultiple("colors", extras.colors);
+    marcarSeleccionMultiple("sizes", extras.sizes);
 
     tituloFormulario.textContent = `Editando Producto #${producto.id}`;
     btnSubmit.innerHTML = `<i class="bi bi-pencil-square me-1"></i> Actualizar producto`;
@@ -179,7 +229,6 @@ lista.addEventListener("click", async (e) => {
 
     await deleteProductById(id);
 
-    // Si estaba en edición ese mismo producto, limpiamos el form
     if (productoEnEdicion?.id === id) {
       salirModoEdicion();
     }
@@ -194,17 +243,21 @@ formProduct.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const product = Object.fromEntries([...new FormData(formProduct)]);
+  const coloresSeleccionados = obtenerSeleccionMultiple("colors");
+  const tallasSeleccionadas = obtenerSeleccionMultiple("sizes");
+  const textoDescripcion = product.descriptionText?.trim() || "";
 
-// Validaciones
+  // Validaciones de los campos principales (Categoría, Colores, Tallas y Descripción son opcionales)
   if (
-      product.productName.trim() === "" ||
-      product.price === "" ||
-      product.level === "" ||
-      product.activity === "" ||
-      product.categoryId === "" ||
-      product.descriptionText.trim() === ""
+    product.productName.trim() === "" ||
+    product.price === "" ||
+    product.level === "" ||
+    product.activity === ""
   ) {
-    mostrarAlerta("Por favor, complete todos los campos del formulario.", "warning");
+    mostrarAlerta(
+      "Por favor, completa Nombre, Precio, Nivel y Actividad.",
+      "warning",
+    );
     return;
   } else if (!isNaN(product.productName)) {
     mostrarAlerta("El nombre del producto no puede ser un número.", "warning");
@@ -212,20 +265,45 @@ formProduct.addEventListener("submit", async (e) => {
   } else if (Number(product.price) <= 0) {
     mostrarAlerta("El precio debe ser mayor a 0.", "warning");
     return;
-  } else if (product.descriptionText.trim().length < 2) {
-    mostrarAlerta("La descripción debe tener entre 2 y 200 caracteres.", "warning");
+  } else if (textoDescripcion !== "" && textoDescripcion.length < 2) {
+    mostrarAlerta(
+      "Si escribes una descripción, debe tener entre 2 y 200 caracteres.",
+      "warning",
+    );
     return;
   }
-  // Objeto con los nombres exactos de ProductRequest
+
+  // Como ProductRequest tiene @NotNull en categoryId en el backend, si el usuario no eligió categoría
+  // usamos automáticamente la primera categoría existente en la BDD para que el backend nunca falle.
+  let categoriaIdEnviar = product.categoryId
+    ? Number(product.categoryId)
+    : categoriasCache[0]?.id;
+
+  if (!categoriaIdEnviar) {
+    await cargarCategorias();
+    categoriaIdEnviar = categoriasCache[0]?.id;
+  }
+
+  // Objeto con los nombres exactos de ProductRequest { productName, price, activity, level, categoryId }
   const productRequest = {
     productName: product.productName.trim(),
     price: Number(product.price),
     activity: product.activity,
     level: product.level,
-    categoryId: Number(product.categoryId),
+    categoryId: categoriaIdEnviar,
   };
 
   btnSubmit.disabled = true;
+
+  // Guardamos en la BDD cada color seleccionado (POST /api/color -> { colorName })
+  for (const colorName of coloresSeleccionados) {
+    await createColor({ colorName });
+  }
+
+  // Guardamos en la BDD cada talla seleccionada (POST /api/size -> { sizeValue })
+  for (const sizeValue of tallasSeleccionadas) {
+    await createSize({ sizeValue });
+  }
 
   // --- MODO EDICIÓN (PUT) ---
   if (productoEnEdicion) {
@@ -238,18 +316,21 @@ formProduct.addEventListener("submit", async (e) => {
       return;
     }
 
-    // Si el producto ya tenía descripción la actualizamos con PUT; si no tenía, la creamos con POST
-    if (productoEnEdicion.description?.id) {
-      await updateDescriptionById(productoEnEdicion.description.id, {
-        descriptionText: product.descriptionText.trim(),
-        productId: id,
-      });
-    } else {
-      await createDescription({
-        descriptionText: product.descriptionText.trim(),
-        productId: id,
-      });
+    if (textoDescripcion !== "") {
+      if (productoEnEdicion.description?.id) {
+        await updateDescriptionById(productoEnEdicion.description.id, {
+          descriptionText: textoDescripcion,
+          productId: id,
+        });
+      } else {
+        await createDescription({
+          descriptionText: textoDescripcion,
+          productId: id,
+        });
+      }
     }
+
+    guardarExtrasProducto(id, coloresSeleccionados, tallasSeleccionadas);
 
     mostrarAlerta(
       `Producto "${productoActualizado.productName}" (#${id}) actualizado correctamente.`,
@@ -270,30 +351,36 @@ formProduct.addEventListener("submit", async (e) => {
     return;
   }
 
-  const descripcionCreada = await createDescription({
-    descriptionText: product.descriptionText.trim(),
-    productId: productoCreado.id,
-  });
-
-  if (descripcionCreada) {
-    mostrarAlerta(
-      `Producto "${productoCreado.productName}" guardado con id ${productoCreado.id}.`,
-      "success",
-    );
-  } else {
-    mostrarAlerta(
-      `El producto se guardó con id ${productoCreado.id}, pero falló la descripción.`,
-      "warning",
-    );
+  // Si el usuario escribió descripción, la guardamos en /api/description
+  if (textoDescripcion !== "") {
+    await createDescription({
+      descriptionText: textoDescripcion,
+      productId: productoCreado.id,
+    });
   }
 
+  guardarExtrasProducto(
+    productoCreado.id,
+    coloresSeleccionados,
+    tallasSeleccionadas,
+  );
+
+  mostrarAlerta(
+    `Producto "${productoCreado.productName}" guardado con id #${productoCreado.id}.`,
+    "success",
+  );
+
   formProduct.reset();
+  marcarSeleccionMultiple("colors", []);
+  marcarSeleccionMultiple("sizes", []);
   btnSubmit.disabled = false;
   await pintarProductos();
 });
 
-// Al abrir la página cargamos los productos desde la API
-pintarProductos();
+// Al abrir la página primero aseguramos/cargamos las categorías en la BDD y luego pintamos los productos
+const inicializar = async () => {
+  await cargarCategorias();
+  await pintarProductos();
+};
 
-// Al abrir la página cargamos las categorías desde la API
-//cargarCategorias();
+inicializar();
