@@ -18,6 +18,10 @@ const btnSubmit = document.querySelector("#btnSubmit");
 const btnCancelarEdicion = document.querySelector("#btnCancelarEdicion");
 const tituloFormulario = document.querySelector("#tituloFormulario");
 
+//todo Seleccionamos el campo de categorías del formulario
+const selectCategory = document.querySelector("#categoryId");
+
+//todo Muestra una alerta de Bootstrap (tipo: "success", "danger", "warning")
 // Guardamos en memoria la lista actual y el producto que se está editando (null si es nuevo)
 let productosCache = [];
 let productoEnEdicion = null;
@@ -28,6 +32,45 @@ const mostrarAlerta = (mensaje, tipo) => {
   alerta.textContent = mensaje;
 };
 
+//todo Consultamos las categorías registradas en la API REST
+const cargarCategorias = async () => {
+  try {
+    // Realizamos una petición GET al backend
+    const response = await fetch("/api/categories");
+
+    // Verificamos si la petición fue exitosa
+    if (!response.ok) {
+      throw new Error("No se pudieron obtener las categorías");
+    }
+
+    // Convertimos la respuesta JSON en un arreglo
+    const categorias = await response.json();
+
+    // Limpiamos las opciones anteriores
+    selectCategory.innerHTML =
+        '<option value="">Selecciona una categoría...</option>';
+
+    // Recorremos las categorías recibidas desde MySQL
+    categorias.forEach((categoria) => {
+      const option = document.createElement("option");
+
+      // Guardamos el ID de la categoría
+      option.value = categoria.id;
+
+      // Mostramos el nombre de la categoría
+      option.textContent = categoria.categoryName;
+
+      // Agregamos la opción al select
+      selectCategory.appendChild(option);
+    });
+
+  } catch (error) {
+    console.error("Error al cargar categorías:", error);
+    mostrarAlerta("No se pudieron cargar las categorías.", "danger");
+  }
+};
+
+//todo Pinta en la tabla los productos que llegan de la API
 // Sale del modo edición y limpia el formulario
 const salirModoEdicion = () => {
   productoEnEdicion = null;
@@ -152,13 +195,14 @@ formProduct.addEventListener("submit", async (e) => {
 
   const product = Object.fromEntries([...new FormData(formProduct)]);
 
-  // Validaciones
+// Validaciones
   if (
-    product.productName.trim() === "" ||
-    product.price === "" ||
-    product.level === "" ||
-    product.activity === "" ||
-    product.descriptionText.trim() === ""
+      product.productName.trim() === "" ||
+      product.price === "" ||
+      product.level === "" ||
+      product.activity === "" ||
+      product.categoryId === "" ||
+      product.descriptionText.trim() === ""
   ) {
     mostrarAlerta("Por favor, complete todos los campos del formulario.", "warning");
     return;
@@ -172,13 +216,13 @@ formProduct.addEventListener("submit", async (e) => {
     mostrarAlerta("La descripción debe tener entre 2 y 200 caracteres.", "warning");
     return;
   }
-
   // Objeto con los nombres exactos de ProductRequest
   const productRequest = {
     productName: product.productName.trim(),
     price: Number(product.price),
     activity: product.activity,
     level: product.level,
+    categoryId: Number(product.categoryId),
   };
 
   btnSubmit.disabled = true;
@@ -250,3 +294,6 @@ formProduct.addEventListener("submit", async (e) => {
 
 // Al abrir la página cargamos los productos desde la API
 pintarProductos();
+
+// Al abrir la página cargamos las categorías desde la API
+cargarCategorias();
