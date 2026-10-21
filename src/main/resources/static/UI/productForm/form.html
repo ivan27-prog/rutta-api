@@ -70,6 +70,27 @@
         border-color: #28a8e0;
         box-shadow: 0 0 0 0.2rem rgba(40, 168, 224, 0.2);
       }
+      /* Botones tipo píldora para selección múltiple de colores y tallas */
+      .btn-check:checked + .btn-rutta-chip {
+        background-color: #004261;
+        color: #ffffff;
+        border-color: #004261;
+      }
+      .btn-rutta-chip {
+        border: 1px solid rgba(0, 66, 97, 0.28);
+        color: #004261;
+        background-color: #ffffff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 0.35rem 0.9rem;
+        transition: all 0.15s ease;
+      }
+      .btn-rutta-chip:hover {
+        border-color: #004261;
+        background-color: rgba(0, 66, 97, 0.06);
+        color: #004261;
+      }
       .btn-rutta-guardar {
         background-color: #004261;
         color: #ffffff;
@@ -92,14 +113,14 @@
         background-color: #004261;
         color: #ffffff;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
         border: none;
-        padding: 0.95rem 1rem;
+        padding: 0.95rem 0.85rem;
       }
       .tabla-rutta tbody td {
-        padding: 0.9rem 1rem;
+        padding: 0.85rem;
         color: #2b2b2b;
         border-color: rgba(0, 66, 97, 0.08);
       }
@@ -109,6 +130,16 @@
         font-weight: 600;
         padding: 0.35em 0.75em;
         border-radius: 999px;
+      }
+      .badge-chip {
+        background-color: #e1ebef;
+        color: #004261;
+        font-weight: 600;
+        font-size: 0.75rem;
+        padding: 0.25em 0.6em;
+        border-radius: 0.4rem;
+        display: inline-block;
+        margin: 0.1rem;
       }
       .btn-accion-editar {
         color: #004261;
@@ -201,7 +232,7 @@
             <div class="row g-3">
               <!-- NOMBRE (productName) -->
               <div class="col-md-6">
-                <label for="productName" class="form-label">Nombre del producto</label>
+                <label for="productName" class="form-label">Nombre del producto *</label>
                 <input
                   type="text"
                   class="form-control"
@@ -215,7 +246,7 @@
 
               <!-- PRECIO (price) -->
               <div class="col-md-6">
-                <label for="price" class="form-label">Precio (MXN $)</label>
+                <label for="price" class="form-label">Precio (MXN $) *</label>
                 <input
                   type="number"
                   class="form-control"
@@ -229,8 +260,8 @@
               </div>
 
               <!-- NIVEL (level) -->
-              <div class="col-md-6">
-                <label for="level" class="form-label">Nivel</label>
+              <div class="col-md-4">
+                <label for="level" class="form-label">Nivel *</label>
                 <select class="form-select" id="level" name="level" required>
                   <option value="">Selecciona...</option>
                   <option value="Principiante">Principiante</option>
@@ -240,8 +271,8 @@
               </div>
 
               <!-- ACTIVIDAD (activity) -->
-              <div class="col-md-6">
-                <label for="activity" class="form-label">Actividad</label>
+              <div class="col-md-4">
+                <label for="activity" class="form-label">Actividad *</label>
                 <select class="form-select" id="activity" name="activity" required>
                   <option value="">Selecciona...</option>
                   <option value="Montañismo">Montañismo</option>
@@ -251,66 +282,70 @@
                   <option value="Trekking">Trekking</option>
                 </select>
               </div>
+
               <!-- CATEGORÍA (categoryId) -->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="categoryId" class="form-label">
-                  Categoría
+                  Categoría <span class="text-muted fw-normal">(Opcional)</span>
                 </label>
-                <select
-                        class="form-select"
-                        id="category"
-                        name="category"
-                        required
-                >
+                <select class="form-select" id="categoryId" name="categoryId">
                   <option value="">Selecciona una categoría...</option>
-                  <option value="Mochilas">Mochilas</option>
-                  <option value="Equipo">Equipo</option>
-                  <option value="Ropa">Ropa</option>
-                  <option value="Calzado">Calzado</option>
                 </select>
               </div>
-              <!-- COLOR (color) -->
+
+              <!-- COLORES: Selección múltiple opcional (se guarda en /api/color) -->
               <div class="col-md-6">
-                <label for="color" class="form-label">
-                  Color
+                <label class="form-label d-block">
+                  Colores <span class="text-muted fw-normal">(Opcional · puedes elegir varios)</span>
                 </label>
-                <select
-                        class="form-select"
-                        id="color"
-                        name="color"
-                        required
-                >
-                  <option value="">Selecciona un color...</option>
-                  <option value="Negro">Negro</option>
-                  <option value="Blanco">Blanco</option>
-                  <option value="Cafe">Cafe</option>
-                  <option value="Azul">Azul</option>
-                  <option value="Gris">Gris</option>
-                </select>
+                <div class="d-flex flex-wrap gap-2" id="grupoColores">
+                  <input type="checkbox" class="btn-check" name="colors" id="colorNegro" value="Negro" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="colorNegro">Negro</label>
+
+                  <input type="checkbox" class="btn-check" name="colors" id="colorBlanco" value="Blanco" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="colorBlanco">Blanco</label>
+
+                  <input type="checkbox" class="btn-check" name="colors" id="colorCafe" value="Cafe" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="colorCafe">Café</label>
+
+                  <input type="checkbox" class="btn-check" name="colors" id="colorAzul" value="Azul" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="colorAzul">Azul</label>
+
+                  <input type="checkbox" class="btn-check" name="colors" id="colorGris" value="Gris" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="colorGris">Gris</label>
+
+                  <input type="checkbox" class="btn-check" name="colors" id="colorVerde" value="Verde" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="colorVerde">Verde</label>
+                </div>
               </div>
-              <!-- TALLAS (tallas) -->
+
+              <!-- TALLAS: Selección múltiple opcional (se guarda en /api/size) -->
               <div class="col-md-6">
-                <label for="tallas" class="form-label">
-                  Color
+                <label class="form-label d-block">
+                  Tallas <span class="text-muted fw-normal">(Opcional · puedes elegir varias)</span>
                 </label>
-                <select
-                        class="form-select"
-                        id="tallas"
-                        name="tallas"
-                        required
-                >
-                  <option value="">Selecciona una talla...</option>
-                  <option value="XS">XS</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                </select>
+                <div class="d-flex flex-wrap gap-2" id="grupoTallas">
+                  <input type="checkbox" class="btn-check" name="sizes" id="tallaXS" value="XS" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="tallaXS">XS</label>
+
+                  <input type="checkbox" class="btn-check" name="sizes" id="tallaS" value="S" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="tallaS">S</label>
+
+                  <input type="checkbox" class="btn-check" name="sizes" id="tallaM" value="M" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="tallaM">M</label>
+
+                  <input type="checkbox" class="btn-check" name="sizes" id="tallaL" value="L" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="tallaL">L</label>
+
+                  <input type="checkbox" class="btn-check" name="sizes" id="tallaXL" value="XL" autocomplete="off" />
+                  <label class="btn btn-rutta-chip" for="tallaXL">XL</label>
+                </div>
               </div>
+
               <!-- DESCRIPCION (descriptionText) -->
               <div class="col-12">
                 <label for="descriptionText" class="form-label">
-                  Descripción (2 a 200 caracteres)
+                  Descripción <span class="text-muted fw-normal">(Opcional · 2 a 200 caracteres)</span>
                 </label>
                 <textarea
                   class="form-control"
@@ -320,7 +355,6 @@
                   minlength="2"
                   maxlength="200"
                   placeholder="Impermeable y corta-viento, ligera y compacta"
-                  required
                 ></textarea>
               </div>
 
@@ -356,8 +390,11 @@
               <th>ID</th>
               <th>Nombre</th>
               <th>Precio</th>
+              <th>Categoría</th>
               <th>Nivel</th>
               <th>Actividad</th>
+              <th>Colores</th>
+              <th>Tallas</th>
               <th>Descripción</th>
               <th class="text-center">Acciones</th>
             </tr>
