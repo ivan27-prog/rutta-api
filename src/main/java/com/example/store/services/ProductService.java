@@ -1,5 +1,7 @@
 package com.example.store.services;
 
+import com.example.store.models.Category;
+import com.example.store.repository.CategoryRepository;
 import com.example.store.dtos.ProductRequest;
 import com.example.store.exceptions.ResourceNotFoundException;
 import com.example.store.models.Product;
@@ -13,11 +15,15 @@ import java.util.List;
 @Service
 public class ProductService {
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
 
-    // private CategoryRepository categoryRepository;
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(
+            ProductRepository productRepository,
+            CategoryRepository categoryRepository
+    ) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     // Método para obtener todos los productos
@@ -33,11 +39,24 @@ public class ProductService {
 
     // Metodo para crear producto
     public Product createProduct(ProductRequest newProduct) {
+
         Product product = new Product();
+
         product.setProductName(newProduct.productName());
         product.setPrice(newProduct.price());
         product.setActivity(newProduct.activity());
         product.setLevel(newProduct.level());
+
+        // Buscamos la categoría seleccionada por su ID
+        Category category = categoryRepository
+                .findById(newProduct.categoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Categoría con el id " + newProduct.categoryId() + " no encontrada"
+                ));
+
+        // Relacionamos la categoría con el producto
+        product.setCategory(category);
+
         return productRepository.save(product);
     }
 
@@ -53,6 +72,14 @@ public class ProductService {
             oldProduct.setActivity(updateProduct.activity());
         if (updateProduct.level() != null)
             oldProduct.setLevel(updateProduct.level());
+        if (updateProduct.categoryId() != null) {
+            Category category = categoryRepository
+                    .findById(updateProduct.categoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "Categoría no encontrada"
+                    ));
+            oldProduct.setCategory(category);
+        }
         return productRepository.save(oldProduct);
     }
 

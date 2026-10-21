@@ -195,13 +195,14 @@ formProduct.addEventListener("submit", async (e) => {
 
   const product = Object.fromEntries([...new FormData(formProduct)]);
 
-  // Validaciones
+// Validaciones
   if (
-    product.productName.trim() === "" ||
-    product.price === "" ||
-    product.level === "" ||
-    product.activity === "" ||
-    product.descriptionText.trim() === ""
+      product.productName.trim() === "" ||
+      product.price === "" ||
+      product.level === "" ||
+      product.activity === "" ||
+      product.categoryId === "" ||
+      product.descriptionText.trim() === ""
   ) {
     mostrarAlerta("Por favor, complete todos los campos del formulario.", "warning");
     return;
@@ -215,13 +216,13 @@ formProduct.addEventListener("submit", async (e) => {
     mostrarAlerta("La descripción debe tener entre 2 y 200 caracteres.", "warning");
     return;
   }
-
   // Objeto con los nombres exactos de ProductRequest
   const productRequest = {
     productName: product.productName.trim(),
     price: Number(product.price),
     activity: product.activity,
     level: product.level,
+    categoryId: Number(product.categoryId),
   };
 
   btnSubmit.disabled = true;
@@ -293,3 +294,6 @@ formProduct.addEventListener("submit", async (e) => {
 
 // Al abrir la página cargamos los productos desde la API
 pintarProductos();
+
+// Al abrir la página cargamos las categorías desde la API
+cargarCategorias();
