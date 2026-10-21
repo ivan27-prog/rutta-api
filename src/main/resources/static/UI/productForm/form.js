@@ -296,4 +296,4 @@ formProduct.addEventListener("submit", async (e) => {
 pintarProductos();
 
 // Al abrir la página cargamos las categorías desde la API
-cargarCategorias();
+//cargarCategorias();
