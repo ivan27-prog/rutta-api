@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rutta - Añadir Producto</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <h1 class="mb-4 text-center">Añadir Nuevo Producto</h1>
+
+      <div id="alertaProducto" class="d-none" role="alert"></div>
+
+      <div class="card shadow-sm mb-5">
+        <div class="card-body">
+          <!--todo ============FORMULARIO============-->
+          <!-- Los "name" coinciden con los campos de ProductRequest y DescriptionRequest -->
+          <form id="formProducto" novalidate>
+            <div class="row g-3">
+              <!--todo ============NOMBRE (productName)============-->
+              <div class="col-md-6">
+                <label for="productName" class="form-label"
+                  >Nombre del producto</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="productName"
+                  name="productName"
+                  maxlength="200"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Por favor, ingresa el nombre.
+                </div>
+              </div>
+
+              <!--todo ============PRECIO (price)============-->
+              <div class="col-md-6">
+                <label for="price" class="form-label">Precio ($)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  name="price"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Por favor, ingresa un precio válido.
+                </div>
+              </div>
+
+              <!--todo ==== NIVEL (level) ========= -->
+              <div class="col-md-6">
+                <label for="level" class="form-label">Nivel</label>
+                <select class="form-select" id="level" name="level" required>
+                  <option value="">Selecciona...</option>
+                  <option value="Principiante">Principiante</option>
+                  <option value="Intermedio">Intermedio</option>
+                  <option value="Avanzado">Avanzado</option>
+                </select>
+                <div class="invalid-feedback">Selecciona un nivel.</div>
+              </div>
+
+              <!--todo ==== ACTIVIDAD (activity) ========= -->
+              <div class="col-md-6">
+                <label for="activity" class="form-label">Actividad</label>
+                <select
+                  class="form-select"
+                  id="activity"
+                  name="activity"
+                  required
+                >
+                  <option value="">Selecciona...</option>
+                  <option value="Rutas frescas o con viento">
+                    Rutas frescas o con viento
+                  </option>
+                  <option value="Hikking">Hikking</option>
+                  <option value="Trail">Trail</option>
+                  <option value="Trekking">Trekking</option>
+                </select>
+                <div class="invalid-feedback">Selecciona una actividad.</div>
+              </div>
+
+              <!--todo ======== DESCRIPCION (descriptionText) ========= -->
+              <!-- Se guarda con POST /api/description después de crear el producto -->
+              <div class="col-12">
+                <label for="descriptionText" class="form-label"
+                  >Descripción (2 a 200 caracteres)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="descriptionText"
+                  name="descriptionText"
+                  rows="2"
+                  minlength="2"
+                  maxlength="200"
+                  placeholder="Impermeable y corta-viento, ligera y compacta"
+                  required
+                ></textarea>
+                <div class="invalid-feedback">Ingresa la descripción.</div>
+              </div>
+
+              <!--todo ============SUBMIT============-->
+              <div class="col-12 text-end mt-4">
+                <button
+                  type="submit"
+                  id="btnSubmit"
+                  class="btn btn-primary px-4"
+                >
+                  Guardar producto
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <h2 class="mb-3">Productos Guardados</h2>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle bg-white shadow-sm">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Nivel</th>
+              <th>Actividad</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+
+          <tbody id="listaProductos"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--todo         script de formulario (type="module" para poder usar import)-->
+    <script type="module" src="form.js"></script>
+  </body>
+</html>

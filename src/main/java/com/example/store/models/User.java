@@ -1,4 +1,4 @@
-package com.example.store.models;
+/*package com.example.store.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -39,3 +39,4 @@ public class User {
     @Column(name = "phone_number", length = 10, nullable = false)
     private String phoneNumber;
 }
+*/

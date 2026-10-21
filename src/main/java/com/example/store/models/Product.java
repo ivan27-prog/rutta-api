@@ -54,15 +54,15 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),               // FK hacia product
             inverseJoinColumns = @JoinColumn(name = "color_id")        // FK hacia category
     )
-    private Set<Color> color = new HashSet<>();
+    private Set<Color> colors = new HashSet<>();
 
     public void addColor(Color color) {
-        this.color.add(color);
+        this.colors.add(color);
         color.getProducts().add(this);
     }
 
     public void removeColor(Color color) {
-        this.color.remove(color);
+        this.colors.remove(color);
         color.getProducts().remove(this);
     }
 }

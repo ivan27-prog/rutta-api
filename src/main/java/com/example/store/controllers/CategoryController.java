@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping (path = "/api")
+@RequestMapping (path = "/api") //local
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
 public class CategoryController {
