@@ -1,4 +1,4 @@
-package com.example.store.controllers;
+/*package com.example.store.controllers;
 
 import com.example.store.dtos.UserRequest;
 import com.example.store.models.User;
@@ -52,3 +52,4 @@ public class UserController {
         return service.deleteUserById(id);
     }
 }
+*/

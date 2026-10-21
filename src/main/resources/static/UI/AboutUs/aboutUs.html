@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Adapta la página al ancho de celulares, tabletas y computadoras -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Descripción que muestran los buscadores -->
+    <meta
+      name="description"
+      content="Conoce a Trail Coders, el equipo de 10 desarrolladores detrás de Rutta."
+    />
+
+    <!-- Título de la pestaña del navegador -->
+    <title>Sobre Nosotros | Rutta</title>
+
+    <!-- Ícono de la pestaña del navegador -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/img/iconos-rutta/brujula.svg"
+    />
+
+    <!-- Tipografías: Cormorant Garamond (títulos) y Montserrat (textos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap 5.3.8: cuadrícula, navbar, desplegable y carrusel -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <!-- Bootstrap Icons: íconos de búsqueda, usuario y carrito de la navbar -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Estilos globales del proyecto: variables, tipografía, navbar, footer y botones -->
+    <link rel="stylesheet" href="/UI/Styles/styles.css" />
+    <!-- Estilos propios de la página Sobre Nosotros -->
+    <link rel="stylesheet" href="/UI/AboutUs/aboutUs.css" />
+  </head>
+
+  <body class="rutta-identidad">
+    <!-- Enlace de accesibilidad: salta directo al contenido principal -->
+    <a class="salto-contenido" href="#contenido-principal"
+      >Saltar al contenido</a
+    >
+
+    <!-- ================================================================
+         SECCIÓN: BARRA DE NAVEGACIÓN
+         ================================================================ -->
+    <nav
+      class="navbar navbar-expand-lg barra-navegacion sticky-top"
+      aria-label="Navegación principal"
+    >
+      <div class="container">
+        <!-- Logotipo: lleva a la página de inicio -->
+        <a
+          class="navbar-brand marca-rutta"
+          href="/UI/index.html"
+          aria-label="Rutta, volver al inicio"
+        >
+          <span class="marca-logo-actual" aria-hidden="true"></span>
+        </a>
+
+        <!-- Acciones para móvil: buscar, iniciar sesión y carrito -->
+        <div
+          class="acciones-movil d-flex align-items-center gap-1 ms-auto me-2 d-lg-none"
+        >
+          <button
+            class="boton-icono"
+            type="button"
+            data-accion="buscar"
+            aria-label="Buscar productos"
+          >
+            <i class="bi bi-search" aria-hidden="true"></i>
+          </button>
+
+          <a
+            class="boton-icono"
+            href="/UI/Login/login.html"
+            aria-label="Iniciar sesión"
+          >
+            <i class="bi bi-person" aria-hidden="true"></i>
+          </a>
+
+          <button
+            class="boton-icono boton-carrito"
+            type="button"
+            data-accion="carrito"
+            aria-label="Abrir carrito"
+          >
+            <i class="bi bi-cart3" aria-hidden="true"></i>
+            <span class="contador-carrito" data-contador-carrito>0</span>
+          </button>
+        </div>
+
+        <!-- Botón hamburguesa: abre y cierra el menú en pantallas pequeñas -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menuPrincipal"
+          aria-controls="menuPrincipal"
+          aria-expanded="false"
+          aria-label="Mostrar u ocultar navegación"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menú colapsable -->
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <!-- Enlaces principales -->
+          <ul class="navbar-nav mx-auto mb-3 mb-lg-0 align-items-lg-center">
+            <!-- Desplegable de categorías de equipamiento -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="/UI/index.html#productos"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Equipamiento
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="/UI/Productos/productos.html">
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      data-filtro="todos"
+                    >
+                      Ver todo
+                    </button>
+                  </a>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-filtro="mochilas"
+                  >
+                    Mochilas
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-filtro="ropa"
+                  >
+                    Ropa
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-filtro="calzado"
+                  >
+                    Calzado
+                  </button>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/UI/index.html#inicio">Inicio</a>
+            </li>
+            <!-- Página actual (aria-current="page") -->
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/UI/AboutUs/aboutUs.html"
+                aria-current="page"
+                >Sobre Nosotros</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/UI/Guias/guias.html">Guías</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/UI/index.html#sobre-rutta"
+                >Sobre Rutta</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/UI/Ayuda/ayuda.html">Ayuda</a>
+            </li>
+          </ul>
+
+          <!-- Acciones para escritorio: buscar, iniciar sesión y carrito -->
+          <div
+            class="acciones-escritorio d-none d-lg-flex align-items-center gap-1"
+          >
+            <button
+              class="boton-icono"
+              type="button"
+              data-accion="buscar"
+              aria-label="Buscar productos"
+            >
+              <i class="bi bi-search" aria-hidden="true"></i>
+            </button>
+            <a
+              class="boton-icono"
+              href="/UI/Login/login.html"
+              aria-label="Iniciar sesión"
+            >
+              <i class="bi bi-person" aria-hidden="true"></i>
+            </a>
+            <button
+              class="boton-icono boton-carrito"
+              type="button"
+              data-accion="carrito"
+              aria-label="Abrir carrito"
+            >
+              <i class="bi bi-cart3" aria-hidden="true"></i>
+              <span class="contador-carrito" data-contador-carrito>0</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- ===== FIN SECCIÓN: BARRA DE NAVEGACIÓN ===== -->
+
+    <main id="contenido-principal">
+      <!-- ================================================================
+           SECCIÓN: PORTADA "CONOCE A NUESTRO EQUIPO"
+           Al pasar el cursor aparece la foto de fondo, el texto se vuelve
+           blanco y el logo cambia a su versión blanca.
+           ================================================================ -->
+      <header class="about-hero" id="meet-team">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <!-- Columna de texto -->
+            <div class="col-lg-7 text-center text-lg-start">
+              <p
+                class="sobrelinea justify-content-center justify-content-lg-start"
+              >
+                Trail Coders
+              </p>
+              <h1>Conoce a nuestro equipo</h1>
+              <p class="about-lead">
+                Somos <strong>Trail Coders</strong>, un equipo de 10
+                desarrolladores apasionados por la tecnología, la aventura y la
+                creación de experiencias digitales.
+              </p>
+              <p>
+                Nuestro objetivo es combinar tecnología y naturaleza para crear
+                <strong>Rutta</strong>, una experiencia pensada para quienes
+                disfrutan explorar nuevos caminos.
+              </p>
+            </div>
+
+            <!-- Columna del logo (cambia a blanco en hover) -->
+            <div class="col-lg-5 text-center">
+              <img
+                class="about-logo"
+                src="/img/trailcoders-logoazul.png"
+                alt="Logo de Trail Coders"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- ===== FIN SECCIÓN: PORTADA ===== -->
+
+      <!-- ================================================================
+           SECCIÓN: ¿QUIÉNES SOMOS? (fondo amarillo de Rutta)
+           ================================================================ -->
+      <section
+        class="seccion about-quienes"
+        id="quienes-somos"
+        aria-labelledby="titulo-quienes"
+      >
+        <div class="container">
+          <!-- Encabezado de la sección -->
+          <div class="encabezado-seccion mx-auto text-center">
+            <p class="sobrelinea justify-content-center">Sobre nosotros</p>
+            <h2 id="titulo-quienes">¿Quiénes somos?</h2>
+            <p>
+              Trail Coders es un equipo multidisciplinario formado por 10
+              integrantes que comparten el interés por la tecnología, el
+              desarrollo de software y las actividades al aire libre.
+            </p>
+          </div>
+
+          <!-- Tarjetas de valores -->
+          <div class="row g-4">
+            <!-- Valor 1: Tecnología -->
+            <div class="col-md-4">
+              <article class="valor-card">
+                <img
+                  src="/img/iconos-rutta/Icono-rutta-brújula.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <h3>Tecnología</h3>
+                <p>
+                  Utilizamos nuestras habilidades de desarrollo para transformar
+                  ideas en soluciones digitales.
+                </p>
+              </article>
+            </div>
+            <!-- Valor 2: Aventura -->
+            <div class="col-md-4">
+              <article class="valor-card">
+                <img
+                  src="/img/iconos-rutta/Icono-rutta-aventura.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <h3>Aventura</h3>
+                <p>
+                  Nos inspira la exploración, los senderos y la conexión con la
+                  naturaleza.
+                </p>
+              </article>
+            </div>
+            <!-- Valor 3: Trabajo en equipo -->
+            <div class="col-md-4">
+              <article class="valor-card">
+                <img
+                  src="/img/iconos-rutta/icono-rutta-corazón.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <h3>Trabajo en equipo</h3>
+                <p>
+                  Creemos que las mejores ideas surgen cuando diferentes
+                  habilidades trabajan juntas.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ===== FIN SECCIÓN: ¿QUIÉNES SOMOS? ===== -->
+
+      <!-- ================================================================
+           SECCIÓN: NUESTRO EQUIPO (carrusel de integrantes)
+           ================================================================ -->
+      <section
+        class="seccion about-equipo"
+        id="equipo"
+        aria-labelledby="titulo-equipo"
+      >
+        <div class="container">
+          <!-- Encabezado de la sección -->
+          <div class="encabezado-seccion mx-auto text-center">
+            <p class="sobrelinea justify-content-center">Nuestro equipo</p>
+            <h2 id="titulo-equipo">Los Trail Coders</h2>
+            <p>9 integrantes, una misma ruta.</p>
+          </div>
+
+          <!-- Carrusel de Bootstrap -->
+          <div
+            id="teamCarousel"
+            class="carousel slide"
+            data-bs-ride="carousel"
+            aria-label="Integrantes del equipo"
+          >
+            <!-- Diapositivas: una por integrante -->
+            <div class="carousel-inner">
+              <!-- Integrante 1: Sofía Arevalo -->
+              <div class="carousel-item active">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/21.png"
+                        alt="Foto de Sofía Arevalo"
+                      />
+                      <h3>Sofía Arevalo</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 2: Fernanda Cabrera -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/16.png"
+                        alt="Foto de Fernanda Cabrera"
+                      />
+                      <h3>Fernanda Cabrera</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 3: Anahi Matamoros -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/14.png"
+                        alt="Foto de Anahi Matamoros"
+                      />
+                      <h3>Anahi Matamoros</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 5: Fernando Ruperto -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/17.png"
+                        alt="Foto de Fernando Ruperto"
+                      />
+                      <h3>Fernando Ruperto</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 6: Alexander Urvina -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/20.png"
+                        alt="Foto de Alexander Urvina"
+                      />
+                      <h3>Alexander Urvina</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 7: Ivan Bolaños -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/19.png"
+                        alt="Foto de Ivan Bolaños"
+                      />
+                      <h3>Ivan Bolaños</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 8: Christian Pinal -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/13.png"
+                        alt="Foto de Christian Pinal"
+                      />
+                      <h3>Christian Pinal</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 9: Alejandro Alanis -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/18.png"
+                        alt="Foto de Alejandro Alanis"
+                      />
+                      <h3>Alejandro Alanis</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrante 10: Aslan López -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-12 col-md-8 col-lg-5">
+                    <article class="integrante-card">
+                      <img
+                        class="integrante-foto"
+                        src="/img/equipo/15.png"
+                        alt="Foto de Aslan López"
+                      />
+                      <h3>Aslan López</h3>
+                      <p>Desarrollador</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controles: anterior y siguiente -->
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#teamCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#teamCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- ===== FIN SECCIÓN: NUESTRO EQUIPO ===== -->
+
+      <!-- ================================================================
+           SECCIÓN: CIERRE "UNA RUTA COMIENZA CON UNA IDEA"
+           ================================================================ -->
+      <section class="seccion about-cta" aria-labelledby="titulo-cta">
+        <div class="container text-center">
+          <!-- Isotipo decorativo -->
+          <img
+            class="about-cta-isotipo"
+            src="/img/ruttablanco-isotipo.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <p class="sobrelinea sobrelinea-clara justify-content-center">
+            Rutta
+          </p>
+          <h2 id="titulo-cta">Una ruta comienza con una idea</h2>
+          <p class="about-cta-texto">
+            Trail Coders creó Rutta con la idea de hacer que explorar, planear y
+            disfrutar nuevas rutas sea una experiencia más sencilla, accesible y
+            emocionante.
+          </p>
+          <!-- Botón: lleva a la página de inicio -->
+          <a class="boton-primario" href="/UI/AboutUs/explore-rutta.html"
+            >Explorar Rutta</a
+          >
+        </div>
+      </section>
+      <!-- ===== FIN SECCIÓN: CIERRE ===== -->
+    </main>
+
+    <!-- ================================================================
+         SECCIÓN: PIE DE PÁGINA
+         ================================================================ -->
+    <footer class="pie-pagina">
+      <div class="container pie-contenido">
+        <!-- Logo y lema de Rutta -->
+        <div class="pie-marca">
+          <img
+            class="logo-footer-rutta"
+            src="/img/marca/logo-rutta-footer.png"
+            alt="Rutta"
+          />
+          <p>Equipamiento y guías para explorar con seguridad.</p>
+        </div>
+
+        <!-- Crédito del equipo desarrollador -->
+        <div class="credito-trail-coders">
+          <img src="/img/icono-trail-coders.png" alt="" aria-hidden="true" />
+          <span>Desarrollado por <strong>Trail Coders</strong></span>
+        </div>
+
+        <!-- Derechos de autor (el año lo completa aboutUs.js) -->
+        <p class="mb-0">© <span id="anioActual"></span> Rutta.</p>
+      </div>
+    </footer>
+    <!-- ===== FIN SECCIÓN: PIE DE PÁGINA ===== -->
+    <!-- PANEL DE BÚSQUEDA -->
+    <div
+      class="offcanvas offcanvas-top buscador-panel"
+      tabindex="-1"
+      id="buscadorPanel"
+      aria-labelledby="tituloBuscador"
+    >
+      <div class="offcanvas-header container">
+        <div>
+          <p class="sobrelinea mb-1">Catálogo Rutta</p>
+          <h2 class="offcanvas-title" id="tituloBuscador">
+            ¿Qué necesitas para tu ruta?
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar búsqueda"
+        ></button>
+      </div>
+      <div class="offcanvas-body container">
+        <label class="visually-hidden" for="campoBusqueda"
+          >Buscar productos</label
+        >
+        <div class="input-group input-group-lg">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input
+            id="campoBusqueda"
+            class="form-control"
+            type="search"
+            placeholder="Ejemplo: mochila, lluvia o senderismo"
+          />
+          <button class="btn boton-primario" id="botonBuscar" type="button">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL DEL CARRITO -->
+
+    <div
+      class="offcanvas offcanvas-end carrito-panel"
+      tabindex="-1"
+      id="carritoPanel"
+      aria-labelledby="tituloCarrito"
+    >
+      <div class="offcanvas-header carrito-encabezado">
+        <div>
+          <p class="sobrelinea mb-1">Tu selección</p>
+          <h2 class="offcanvas-title" id="tituloCarrito">Carrito de compra</h2>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar carrito"
+        ></button>
+      </div>
+      <div class="offcanvas-body carrito-cuerpo">
+        <div class="carrito-vacio" id="carritoVacio">
+          <span class="carrito-vacio-icono"
+            ><i class="bi bi-cart3" aria-hidden="true"></i
+          ></span>
+          <h3>Tu carrito está vacío</h3>
+          <p>Agrega alguno de nuestros productos para verlo aquí.</p>
+          <a
+            class="btn boton-secundario-claro"
+            href="/UI/Productos/productos.html"
+            >Explorar productos</a
+          >
+        </div>
+        <div class="lista-carrito" id="listaCarrito" aria-live="polite"></div>
+      </div>
+      <div class="carrito-resumen d-none" id="carritoResumen">
+        <div class="carrito-total">
+          <span>Total</span>
+          <strong id="carritoTotal">MXN $0</strong>
+        </div>
+        <p>Impuestos incluidos. Envío calculado al finalizar.</p>
+        <button
+          class="btn boton-primario w-100"
+          id="botonFinalizarCompra"
+          type="button"
+        >
+          Finalizar compra <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </button>
+        <button class="boton-vaciar" id="botonVaciarCarrito" type="button">
+          Vaciar carrito
+        </button>
+      </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div
+        class="toast toast-rutta"
+        id="toastCarrito"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <div class="toast-body d-flex align-items-center gap-3">
+          <i class="bi bi-check-circle-fill"></i>
+          <span id="mensajeToast">Producto agregado al carrito.</span>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/UI/script.js"></script>
+    <script src="/UI/AboutUs/aboutUs.js"></script>
+  </body>
+</html>
