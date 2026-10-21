@@ -58,14 +58,17 @@ public class ProductService {
 
     // Metodo para eliminar producto
     public Product deleteProduct(long id) {
-        // 1. Buscar el producto; si no existe, lanzar la excepción
+
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Producto con el id " + id + " no encontrado"));
 
-        // 2. Borrarlo de la base de datos
+        product.getColors().size();
+        if (product.getDescription() != null) {
+            product.getDescription().getDescriptionText();
+        }
+
         productRepository.delete(product);
 
-        // 3. Regresar el producto que se borró
         return product;
     }
 

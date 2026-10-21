@@ -648,8 +648,8 @@ h3 {
 .producto-imagen img {
     display: block;
     width: 100%;
-    height: 18rem; 
-    object-fit: cover; 
+    height: 18rem;
+    object-fit: cover;
     object-position: center;
 }
 /* Etiqueta de categoría superpuesta. */
@@ -1571,7 +1571,7 @@ h3 {
 }
 
 /* ================================================================
-   INICIO RUTTA LOGIN E IDENTIDAD 
+   INICIO RUTTA LOGIN E IDENTIDAD
    ================================================================ */
 
 /* 11. LOGOTIPO NUEVO */
@@ -1625,239 +1625,239 @@ h3 {
 
 /* Cambia la representación del icono */
 .rutta-identidad .bi:is(.bi-search, .bi-person, .bi-person-check, .bi-cart3, .bi-cart-plus, .bi-heart, .bi-heart-fill, .bi-backpack4, .bi-boot, .bi-person-standing-dress, .bi-triangle-fill, .bi-compass, .bi-signpost-split, .bi-person-walking, .bi-chat-dots, .bi-sliders)::before {
-    content: ""; 
-    display: inline-block; 
-    width: 1.45em; 
-    height: 1.45em; 
-    vertical-align: -0.3em; 
+    content: "";
+    display: inline-block;
+    width: 1.45em;
+    height: 1.45em;
+    vertical-align: -0.3em;
     /**background-color: white; /* Da contraste al azul también sobre botones oscuros. */
-    background-image: var(--rutta-icono); 
-    background-size: contain; 
+    background-image: var(--rutta-icono);
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 0.2em; 
-    image-rendering: auto; 
+    border-radius: 0.2em;
+    image-rendering: auto;
 }
 /* Ajusta el tamaño de los iconos dentro de los botones. */
 .rutta-identidad .boton-icono .bi::before {
-    width: 1.75rem; 
-    height: 1.75rem; 
-    background-color: transparent; 
+    width: 1.75rem;
+    height: 1.75rem;
+    background-color: transparent;
 }
 .rutta-identidad .boton-icono {
-    text-decoration: none; 
+    text-decoration: none;
 }
 .rutta-identidad .boton-icono:hover {
     background: #e1ebef; /* Mantiene visibles los nuevos iconos azules. */
 }
 /* Ajusta el tamaño de los iconos dentro de las tarjetas de categoría. */
 /* i es el contenedor del icono, no el icono en sí. */
-.rutta-identidad .categoria-card > i, 
+.rutta-identidad .categoria-card > i,
 .rutta-identidad .categoria-card:hover > i,
 .rutta-identidad .categoria-card:focus-visible > i {
-    background: transparent; 
-    border: 0; 
+    background: transparent;
+    border: 0;
     border-radius: 0;
 }
 .rutta-identidad .categoria-card > i::before {
-    width: 100%; 
-    height: 100%; 
-    background-color: transparent; 
-    background-size: contain; 
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-size: contain;
 }
 /* Refuerza el estado activo de los botones de favoritos sin cambiar su lógica. */
 .rutta-identidad .boton-favorito[aria-pressed="true"] {
-    outline: 2px solid var(--naranja-sol); 
+    outline: 2px solid var(--naranja-sol);
 }
 /* Cambia el icono del botón de menú para que sea un SVG vectorial. */
 .rutta-identidad .navbar-toggler-icon {
-    background-image: url("../../img/iconos-rutta/menu.svg"); 
-    background-size: contain; 
-    background-position: center; 
-    border-radius: 0.2rem; 
+    background-image: url("../../img/iconos-rutta/menu.svg");
+    background-size: contain;
+    background-position: center;
+    border-radius: 0.2rem;
 }
 
 /* 13. LOGIN — ninguna regla de esta parte redefine la portada o el catálogo. */
 .rutta-login-pagina {
     --login-fondo: url("../../img/hero-rutta.png"); /* CAMBIA LA FOTO DEL LOGIN. */
-    --login-reflejo: -1; 
-    min-height: 100vh; 
-    display: flex; 
-    flex-direction: column; 
-    background: white; 
+    --login-reflejo: -1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: white;
 }
 
 .rutta-login-contenedor {
-    width: min(1320px, calc(100% - 4rem)); 
-    margin: 1rem auto 0; 
-    flex: 1; 
+    width: min(1320px, calc(100% - 4rem));
+    margin: 1rem auto 0;
+    flex: 1;
 }
 .rutta-login-escena {
-    position: relative; 
-    isolation: isolate; 
-    overflow: hidden; 
-    display: flex; 
-    align-items: center; 
-    justify-content: flex-end; 
-    min-height: 35rem; 
-    padding: clamp(1.25rem, 4vw, 4rem); 
-    border-radius: 0.9rem; 
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 35rem;
+    padding: clamp(1.25rem, 4vw, 4rem);
+    border-radius: 0.9rem;
 }
 .rutta-login-escena::before {
-    content: ""; 
-    position: absolute; 
-    inset: 0; 
-    z-index: -2; 
-    background-image: var(--login-fondo); 
-    background-position: center; 
-    background-size: cover; 
-    transform: scaleX(var(--login-reflejo)); 
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: var(--login-fondo);
+    background-position: center;
+    background-size: cover;
+    transform: scaleX(var(--login-reflejo));
 }
 .rutta-login-escena::after {
-    content: ""; 
-    position: absolute; 
-    inset: 0; 
-    z-index: -1; 
-    background: linear-gradient(90deg, transparent 25%, rgba(0, 32, 55, 0.22)); 
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, transparent 25%, rgba(0, 32, 55, 0.22));
 }
 .rutta-login-panel {
-    width: min(100%, 26rem); 
-    padding: clamp(1.5rem, 3vw, 3rem); 
-    color: white; 
-    background: rgba(16, 64, 96, 0.88); 
-    border: 1px solid rgba(255, 255, 255, 0.18); 
-    border-radius: 1rem; 
-    box-shadow: 0 16px 45px rgba(0, 27, 45, 0.18); 
+    width: min(100%, 26rem);
+    padding: clamp(1.5rem, 3vw, 3rem);
+    color: white;
+    background: rgba(16, 64, 96, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1rem;
+    box-shadow: 0 16px 45px rgba(0, 27, 45, 0.18);
 }
 .rutta-login-avatar {
-    display: grid; 
-    place-items: center; 
-    width: 3.5rem; 
-    height: 3.5rem; 
-    margin: 0 auto 0.65rem; 
-    background: white; 
-    border-radius: 50%; 
-    font-size: 1.65rem; 
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 0.65rem;
+    background: white;
+    border-radius: 50%;
+    font-size: 1.65rem;
 }
 .rutta-login-panel h1 {
-    margin: 0 0 2rem; 
-    color: white; 
-    font: 700 clamp(1.65rem, 2.5vw, 2rem) / 1.2 var(--fuente-funcional); 
-    letter-spacing: 0; 
-    text-align: center; 
+    margin: 0 0 2rem;
+    color: white;
+    font: 700 clamp(1.65rem, 2.5vw, 2rem) / 1.2 var(--fuente-funcional);
+    letter-spacing: 0;
+    text-align: center;
 }
 .rutta-login-registro {
-    margin-bottom: 1.25rem; 
-    color: #ffd28d; 
-    font-size: 0.875rem; 
-    text-align: center; 
+    margin-bottom: 1.25rem;
+    color: #ffd28d;
+    font-size: 0.875rem;
+    text-align: center;
 }
 .rutta-login-enlace {
-    padding: 0; 
-    border: 0; 
-    background: none; 
-    color: #b9edff; 
-    font-size: 0.875rem; 
-    font-weight: 600; 
-    text-decoration: underline; 
-    text-underline-offset: 0.2em; 
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #b9edff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
 }
 .rutta-login-enlace:hover {
-    color: white; 
+    color: white;
 }
 .rutta-login-campo {
-    margin-bottom: 1.1rem; 
+    margin-bottom: 1.1rem;
 }
 .rutta-login-campo label {
-    display: block; 
-    color: #f3f8fc; 
-    font-size: 0.875rem; 
-    font-weight: 500; 
+    display: block;
+    color: #f3f8fc;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 .rutta-login-campo input {
-    display: block; 
-    width: 100%; 
-    min-height: 2.5rem; 
-    padding: 0.3rem 0.2rem; 
-    color: white; 
-    caret-color: #ffd28d; 
-    background: transparent; 
-    border: 0; 
-    border-bottom: 2px solid #b9cfdc; 
-    border-radius: 0; 
-    font-size: 1rem; 
+    display: block;
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0.3rem 0.2rem;
+    color: white;
+    caret-color: #ffd28d;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid #b9cfdc;
+    border-radius: 0;
+    font-size: 1rem;
 }
 .rutta-login-campo input:focus {
-    border-bottom-color: #ffc465; 
+    border-bottom-color: #ffc465;
 }
 .rutta-login-recuperar {
-    display: block; 
-    margin: 0 0 1.7rem auto; 
+    display: block;
+    margin: 0 0 1.7rem auto;
     color: white;
 }
 .rutta-login-enviar {
-    display: block; 
-    min-height: 2.85rem; 
-    margin-inline: auto; 
-    padding: 0.65rem 1.8rem; 
-    border: 0; 
-    border-radius: 0.45rem; 
-    color: #17364a; 
-    background: var(--naranja-sol); 
-    font-size: 1rem; 
-    font-weight: 700; 
+    display: block;
+    min-height: 2.85rem;
+    margin-inline: auto;
+    padding: 0.65rem 1.8rem;
+    border: 0;
+    border-radius: 0.45rem;
+    color: #17364a;
+    background: var(--naranja-sol);
+    font-size: 1rem;
+    font-weight: 700;
 }
 .rutta-login-enviar:hover {
-    background: #ffc465; 
+    background: #ffc465;
 }
 .rutta-login-enviar:disabled {
-    opacity: 0.6; 
-    cursor: not-allowed; 
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 .rutta-login-ayuda {
-    margin: 1rem 0 0; 
-    color: #e1edf5; 
+    margin: 1rem 0 0;
+    color: #e1edf5;
     font-size: 0.8125rem;
-    line-height: 1.5; 
+    line-height: 1.5;
     text-align: center;
 }
 .rutta-login-pie {
-    width: min(1320px, calc(100% - 4rem)); 
-    margin: 0 auto; 
-    padding: 1.5rem 0; 
+    width: min(1320px, calc(100% - 4rem));
+    margin: 0 auto;
+    padding: 1.5rem 0;
 }
 .rutta-login-pie nav {
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: space-between; 
-    gap: 0.5rem 1rem; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
 }
 /* Mantiene la apariencia de los enlaces y botones informativos en el pie. */
 .rutta-login-pie :is(a, button) {
-    padding: 0.4rem 0; 
-    color: var(--carbon); 
-    background: none; 
-    border: 0; 
-    font-size: 0.875rem; 
-    text-decoration: none; 
+    padding: 0.4rem 0;
+    color: var(--carbon);
+    background: none;
+    border: 0;
+    font-size: 0.875rem;
+    text-decoration: none;
 }
 .rutta-login-pie :is(a, button):hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 .rutta-login-dialogo {
-    width: min(32rem, calc(100% - 2rem)); 
+    width: min(32rem, calc(100% - 2rem));
     max-height: calc(100dvh - 2rem);
-    padding: 1.5rem; 
-    border: 1px solid var(--borde); 
-    border-radius: 1rem; 
-    color: var(--carbon); 
-    background: white; 
+    padding: 1.5rem;
+    border: 1px solid var(--borde);
+    border-radius: 1rem;
+    color: var(--carbon);
+    background: white;
 }
 .rutta-login-dialogo::backdrop {
-    background: rgba(0, 32, 55, 0.6); 
+    background: rgba(0, 32, 55, 0.6);
 }
 .rutta-login-dialogo h2 {
-    font: 700 1.5rem / 1.3 var(--fuente-funcional); 
+    font: 700 1.5rem / 1.3 var(--fuente-funcional);
 }
 
 /* 14. AJUSTES RESPONSIVOS DEL LOGIN Y DE LA NUEVA MARCA. */
@@ -1867,44 +1867,44 @@ h3 {
         width: calc(100% - 2rem);
     }
     .rutta-login-escena {
-        padding: 1.5rem; 
+        padding: 1.5rem;
     }
 }
 @media (max-width: 575.98px) {
     .rutta-identidad .barra-navegacion .marca-logo-actual {
-        width: 6.6rem; 
+        width: 6.6rem;
     }
     .rutta-identidad .acciones-movil .boton-icono {
-        width: 2.2rem; 
+        width: 2.2rem;
     }
     .rutta-identidad .navbar-toggler {
-        padding-inline: 0.4rem; 
+        padding-inline: 0.4rem;
     }
     .rutta-login-escena {
-        min-height: 39rem; 
-        align-items: flex-end; 
-        justify-content: center; 
-        padding: 4.5rem 0.85rem 1rem; 
+        min-height: 39rem;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 4.5rem 0.85rem 1rem;
     }
     .rutta-login-panel {
-        width: 100%; 
-        padding: 1.5rem 1.1rem; 
+        width: 100%;
+        padding: 1.5rem 1.1rem;
     }
     .rutta-login-panel h1 {
-        margin-bottom: 1.5rem; 
+        margin-bottom: 1.5rem;
     }
     .rutta-login-pie nav {
-        justify-content: center; 
+        justify-content: center;
     }
 }
 /* FIN RUTTA LOGIN E IDENTIDAD. */
 
 /* ================================================================
-   INICIO RUTTA AYUDA / FAQ 
+   INICIO RUTTA AYUDA / FAQ
    ================================================================ */
 /* 1. TIPOGRAFÍA DEL SISTEMA*/
 .rutta-ayuda-pagina {
- 
+
     --fuente-editorial: var(--fuente-funcional);
     display: flex;
     flex-direction: column;
@@ -1916,24 +1916,24 @@ h3 {
 .rutta-ayuda-pagina :is(h1, h2, h3) { font-family: inherit; }
 
 /* 2. CONSERVA LOS LOGOS DEL PROYECTO Y EL FONDO BLANCO DE LA REFERENCIA. */
-.rutta-ayuda-pagina .barra-navegacion { 
+.rutta-ayuda-pagina .barra-navegacion {
     min-height: auto;
 
     padding-bottom: 4px;
-    background: #fff; 
+    background: #fff;
     border-bottom: 0; }
 
 
-.rutta-ayuda-pagina .nav-link[aria-current="page"] { 
+.rutta-ayuda-pagina .nav-link[aria-current="page"] {
     color: #1d5278; }
-.rutta-ayuda-icono { 
-    width: 2rem; 
-    height: 2rem; 
+.rutta-ayuda-icono {
+    width: 2rem;
+    height: 2rem;
     object-fit: contain; }
-.rutta-ayuda-titulo { 
-    color: #1d5278; 
-    font-size: 
-    clamp(2.5rem, 5vw, 3.25rem); 
+.rutta-ayuda-titulo {
+    color: #1d5278;
+    font-size:
+    clamp(2.5rem, 5vw, 3.25rem);
     font-weight: 700; }
 .rutta-ayuda-subtitulo {
     color: #1d5278;
@@ -1956,14 +1956,14 @@ h3 {
     border-radius: var(--bs-accordion-border-radius);
     overflow: hidden;
 }
-.rutta-ayuda-pagina .accordion-button { 
-    font-size: 1rem; 
-    font-weight: 600; 
-    line-height: 1.5; 
+.rutta-ayuda-pagina .accordion-button {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
 }
-.rutta-ayuda-pagina .accordion-body { 
-    font-size: 0.95rem; 
-    line-height: 1.7; 
+.rutta-ayuda-pagina .accordion-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
 }
 /* Sustituye la flecha visual por los símbolos de la referencia. */
 .rutta-ayuda-pagina .accordion-button::after {
@@ -1977,14 +1977,14 @@ h3 {
 .rutta-ayuda-pagina .accordion-button:not(.collapsed)::after { content: "−"; }
 
 /* 4. COLORES DEL FORMULARIO; el tamaño y la distribución vienen de Bootstrap. */
-.rutta-ayuda-contacto h2 { 
-    color: #0873cc; 
-    font-weight: 600; 
+.rutta-ayuda-contacto h2 {
+    color: #0873cc;
+    font-weight: 600;
 }
-.rutta-ayuda-contacto .form-control { 
+.rutta-ayuda-contacto .form-control {
     border-color: #278eff; }
-.rutta-ayuda-contacto textarea { 
-    resize: vertical; 
+.rutta-ayuda-contacto textarea {
+    resize: vertical;
 }
 .rutta-ayuda-enviar {
     --bs-btn-bg: var(--naranja-sol);
@@ -1997,11 +1997,11 @@ h3 {
     --bs-btn-active-color: #202020;
     font-weight: 600;
 }
-.rutta-ayuda-estado { 
-    color: #1d5278; 
+.rutta-ayuda-estado {
+    color: #1d5278;
 }
-.rutta-ayuda-estado:empty { 
-    display: none; 
+.rutta-ayuda-estado:empty {
+    display: none;
 }
 .rutta-ayuda-pagina :is(button, a, input, textarea):focus-visible {
     outline: 3px solid #1d5278;
@@ -2009,14 +2009,14 @@ h3 {
 }
 
 /* 5. IMAGEN DECORATIVA*/
-.rutta-ayuda-decoracion { 
-    margin-top: auto; 
-    pointer-events: none; 
+.rutta-ayuda-decoracion {
+    margin-top: auto;
+    pointer-events: none;
 }
-.rutta-ayuda-decoracion img { 
-    display: block; 
-    width: 13rem; 
-    max-width: 45vw; 
+.rutta-ayuda-decoracion img {
+    display: block;
+    width: 13rem;
+    max-width: 45vw;
     height: auto; }
 
 /*Personalización de widget personaje Rutilio pagina de Ayuda*/
@@ -2036,8 +2036,8 @@ h3 {
 /*Posición del contenedor widget*/
 .widget{
     position: fixed; /*Ancla elemento a la ventana del navegador*/
-    bottom: 20px; 
-    right: 18px; 
+    bottom: 20px;
+    right: 18px;
     z-index: 999; /*Controla el orden de apilamiento en el eje z (hacia adelante/atras, el número asignado garantiza que el widget quede adelante*/
 }
 /*Burbuja de saludo*/
@@ -2083,7 +2083,7 @@ h3 {
 
 /*Menu de opciones de widget*/
 /*Personalización de botón ver opciones*/
-.ver-opciones { 
+.ver-opciones {
   border: none;
   background-color: #1c4f78;
   color: white;
@@ -2110,7 +2110,7 @@ h3 {
   padding-top: 30px;
   gap: 8px;
   width: 220px;
-  
+
 }
 /*Cuando el menú tiene la clase "mostrar" (la agrega JavaScript)*/
 .menu-opciones.mostrar {
@@ -3477,21 +3477,24 @@ h3 {
 }
 
 @media (max-width: 575px) {
-  .beneficios-rutta {
-    padding: 1.5rem 0;
-  }
+    .beneficios-rutta {
+        padding: 1.5rem 0;
+    }
 
-  .beneficio-rutta {
-    padding: 0.4rem 0.75rem;
-  }
+    .beneficio-rutta {
+        padding: 0.4rem 0.75rem;
+    }
 
-  .beneficio-rutta > i {
-    font-size: 1.7rem;
-/* SECCIÓN DE CATEGORÍAS */
-.categorias {
-  padding: 55px 5%;
-  background: #f8faf9;
-  font-family: Arial, sans-serif;
+    .beneficio-rutta > i {
+        font-size: 1.7rem;
+    }
+
+    /* SECCIÓN DE CATEGORÍAS */
+    .categorias {
+        padding: 55px 5%;
+        background: #f8faf9;
+        font-family: Arial, sans-serif;
+    }
 }
 
 .categorias-header {
@@ -3638,20 +3641,43 @@ h3 {
 
 /* CELULARES */
 @media (max-width: 550px) {
-  .categorias {
-    padding: 35px 18px;
-  }
+    .categorias {
+        padding: 35px 18px;
+    }
 
-  .categorias-header {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
+    .categorias-header {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
 
-  .cards-container {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 
-  .card-categoria > img {
-    height: 220px;
-  }
+    .card-categoria > img {
+        height: 220px;
+    }
+
+    .menu-opciones .opcion-menu {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #1a365d; /* Azul marino corporativo / sobrio */
+        text-decoration: none; /* Quita el subrayado */
+        display: block; /* Asegura que ocupe todo el ancho del botón */
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        background-color: #f8fafc; /* Fondo gris claro tipo tarjeta */
+        transition: background-color 0.2s ease, color 0.2s ease;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    /* Efecto hover interactivo */
+    .menu-opciones .opcion-menu:hover {
+        background-color: #e2e8f0;
+        color: #0f172a;
+        text-decoration: none;
+    }
+}

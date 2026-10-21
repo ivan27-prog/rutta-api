@@ -148,6 +148,8 @@ rutilio.addEventListener('click', function () {
     rutilio.classList.remove('mini');
   });
 
+
+
   // querySelectorAll: devuelve UNA LISTA con todos los botones .opcion-menu
   const botonesMenu = document.querySelectorAll('.opcion-menu');
 
