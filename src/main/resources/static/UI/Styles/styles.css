@@ -310,10 +310,21 @@ h3 {
     background-size: cover;
 }
 
+/* Video de fondo que cubre toda la portada detrás de la capa y las letras. */
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
 /* Crea el degradado que deja la imagen visible y mantiene el texto legible. */
 .hero-capa {
     position: absolute;
     inset: 0;
+    z-index: 1;
     background:
         linear-gradient(90deg, rgba(225, 235, 239, 0.98) 0%, rgba(225, 235, 239, 0.88) 35%, rgba(225, 235, 239, 0.16) 67%),
         linear-gradient(0deg, rgba(0, 66, 97, 0.18), transparent 80%);
