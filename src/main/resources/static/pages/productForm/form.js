@@ -288,8 +288,6 @@ formProduct.addEventListener("submit", async (e) => {
   const coloresSeleccionados = obtenerSeleccionMultiple("colors");
   const tallasSeleccionadas = obtenerSeleccionMultiple("sizes");
   const textoDescripcion = product.descriptionText?.trim() || "";
-  const textoIdeal = product.idealFor?.trim() || "";
-
 
   // Validaciones de los campos principales (Categoría, Colores, Tallas y Descripción son opcionales)
   if (
@@ -414,12 +412,13 @@ formProduct.addEventListener("submit", async (e) => {
     "success",
   );
 
-  
+
   formProduct.reset();
   actualizarTallas();
   marcarSeleccionMultiple("colors", []);
   marcarSeleccionMultiple("sizes", []);
   btnSubmit.disabled = false;
+  await pintarProductos();
 });
 
 // Al abrir la página primero aseguramos/cargamos las categorías en la BDD y luego pintamos los productos
