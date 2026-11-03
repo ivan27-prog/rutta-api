@@ -17,14 +17,14 @@ public class Description {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddescription")
+    @Column(name = "id_description")
     private Long id;
 
     @Column(name = "description", length = 200, nullable = false)
     private String descriptionText;
 
-    @ManyToOne
-    @JoinColumn(name = "product_idproducts", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "productId", nullable = false, unique = true)
     @JsonIgnore
     private Product product;
 

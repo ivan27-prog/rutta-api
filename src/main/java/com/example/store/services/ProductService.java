@@ -10,20 +10,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import com.example.store.models.Color;
+import com.example.store.models.Size;
+import com.example.store.repository.ColorRepository;
+import com.example.store.repository.SizeRepository;
+import java.util.HashSet;
+import java.util.Set;
 
 //Product Service es la lógica de negocio sobre la entidad de Producto
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
-    private CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ColorRepository colorRepository;
+    private final SizeRepository sizeRepository;
 
     @Autowired
     public ProductService(
             ProductRepository productRepository,
-            CategoryRepository categoryRepository
+            CategoryRepository categoryRepository,
+            ColorRepository colorRepository,
+            SizeRepository sizeRepository
     ) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.colorRepository = colorRepository;
+        this.sizeRepository = sizeRepository;
     }
 
     // Método para obtener todos los productos
@@ -35,6 +47,31 @@ public class ProductService {
     public Product getProductById(long id) {
         return productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Producto con el id + " + id + " no encontrado"));
+    }
+
+    private void asignarColoresYTallas(Product product, ProductRequest request) {
+
+        if (request.colorIds() != null) {
+            Set<Color> colores = new HashSet<>(
+                    colorRepository.findAllById(request.colorIds())
+            );
+
+            if (colores.size() != new HashSet<>(request.colorIds()).size()) {
+                throw new ResourceNotFoundException("Uno o más colores no existen");
+            }
+            product.setColors(colores);
+        }
+
+        if (request.sizeIds() != null) {
+            Set<Size> tallas = new HashSet<>(
+                    sizeRepository.findAllById(request.sizeIds())
+            );
+
+            if (tallas.size() != new HashSet<>(request.sizeIds()).size()) {
+                throw new ResourceNotFoundException("Una o más tallas no existen");
+            }
+            product.setSizes(tallas);
+        }
     }
 
     // Metodo para crear producto
@@ -56,6 +93,8 @@ public class ProductService {
 
         // Relacionamos la categoría con el producto
         product.setCategory(category);
+
+        asignarColoresYTallas(product, newProduct);
 
         return productRepository.save(product);
     }
@@ -80,6 +119,7 @@ public class ProductService {
                     ));
             oldProduct.setCategory(category);
         }
+        asignarColoresYTallas(oldProduct, updateProduct);
         return productRepository.save(oldProduct);
     }
 
@@ -90,6 +130,7 @@ public class ProductService {
                 () -> new ResourceNotFoundException("Producto con el id " + id + " no encontrado"));
 
         product.getColors().size();
+        product.getSizes().size();
         if (product.getDescription() != null) {
             product.getDescription().getDescriptionText();
         }
