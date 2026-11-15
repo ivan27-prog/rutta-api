@@ -1,0 +1,33 @@
+name: Publicar Frontend en GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Tomar archivos desde src/main/resources/static
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'src/main/resources/static'
+
+      - name: Publicar sitio web
+        id: deployment
+        uses: actions/deploy-pages@v4
