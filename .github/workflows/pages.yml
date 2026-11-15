@@ -20,6 +20,10 @@ jobs:
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
+      - name: Ajustar rutas para GitHub Pages
+        run: |
+          find src/main/resources/static -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \) -exec sed -i 's|href="/|href="/rutta-api/|g; s|src="/|src="/rutta-api/|g; s|url("/|url("/rutta-api/|g; s|url(/|url(/rutta-api/|g' {} +
+
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
