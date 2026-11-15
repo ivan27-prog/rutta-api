@@ -1,8 +1,8 @@
-name: Publicar Frontend en GitHub Pages
+name: Deploy static to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -10,28 +10,33 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Ajustar rutas para GitHub Pages
+      - name: Preparar sitio con rutas del subdirectorio
         run: |
-          find src/main/resources/static -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \) -exec sed -i 's|href="/|href="/rutta-api/|g; s|src="/|src="/rutta-api/|g; s|url("/|url("/rutta-api/|g; s|url(/|url(/rutta-api/|g' {} +
+          mkdir _site
+          cp -r src/main/resources/static/. _site/
+          # Antepone /rutta-api a las rutas absolutas internas
+          find _site -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' \) \
+            -exec sed -i -E "s#([\"'\`(=])/(assets|pages|services|video)/#\1/rutta-api/\2/#g" {} +
+          touch _site/.nojekyll
 
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
-      - name: Tomar archivos desde src/main/resources/static
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: 'src/main/resources/static'
+          path: _site
 
-      - name: Publicar sitio web
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
