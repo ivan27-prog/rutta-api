@@ -7,6 +7,7 @@ El proyecto nace de una necesidad: facilitar la elección de equipamiento adecua
 Más allá de ofrecer productos, Rutta busca acompañar al usuario mediante información sobre niveles de experiencia, características del terreno y recomendaciones que le permitan tomar decisiones de compra informadas.
 
 **[Explorar Rutta](https://rutta-virid.vercel.app/)** | **[Repositorio Backend](https://github.com/ivan27-prog/rutta-api)**
+
 <img width="1877" height="833" alt="image" src="https://github.com/user-attachments/assets/975400aa-2e88-4e74-be1e-5149bb4abb87" />
 
 
